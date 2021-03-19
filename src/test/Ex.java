@@ -210,16 +210,32 @@ public class Ex extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UseDB db = new UseDB();
-				try {
-					if (tableSelected) {
-						db.remove(table.getValueAt(index, 0).toString());
-						db.select(dtm);
-						tableSelected = false;
-						clearField();
+				if (tableSelected) {
+					UseDB db = new UseDB();
+					try {
+						if (tableSelected) {
+							db.remove(table.getValueAt(index, 0).toString());
+							db.select(dtm);
+							tableSelected = false;
+							clearField();
+						}
+					} catch (Exception ee) {
+						System.out.println("오류같은걸 끼얹나?");
 					}
-				} catch (Exception ee) {
-					System.out.println("오류같은걸 끼얹나?");
+				}else {
+					String indexString = JOptionPane.showInputDialog(null,
+							"몇번째줄 삭제할까", "줄삭제", 0);
+					if (indexString != null && indexString != "") {
+						try {
+							UseDB db = new UseDB();
+							index = Integer.parseInt(indexString) - 1;
+							String name = dtm.getValueAt(index, 0).toString();
+							db.remove(name);
+							dtm.removeRow(index);
+						} catch (Exception ee) {
+							JOptionPane.showMessageDialog(null, "잘못된 입력");
+						}
+					}
 				}
 			}
 		});
