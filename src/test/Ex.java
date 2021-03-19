@@ -25,7 +25,9 @@ import javax.swing.table.DefaultTableModel;
 import DBest.UseDB;
 
 public class Ex extends JFrame {
-
+	
+	private static final long serialVersionUID = 1L;
+	
 	int width = 620;
 	JLabel emptyLbl1 = new JLabel("  ");
 	JLabel emptyLbl2 = new JLabel("  ");
@@ -35,7 +37,7 @@ public class Ex extends JFrame {
 	JScrollPane pn5;
 	JLabel topLbl, depCodeLbl, depNameLbl, depMajorLbl;
 	JTextField depCodeTf, depNameTf, depMajorTf, searchBox;
-	JComboBox searchCondition;
+	JComboBox<String> searchCondition;
 	JButton select, selectAll, insert, modify, remove, exit;
 	DefaultTableModel dtm;
 	JTable table;
@@ -124,7 +126,7 @@ public class Ex extends JFrame {
 		pn2_1.add(depMajorTf);
 
 		String[] conditions = { "학과코드", "학과명", "전공명" };
-		searchCondition = new JComboBox(conditions);
+		searchCondition = new JComboBox<String>(conditions);
 		searchCondition.setPreferredSize(new Dimension(100, 20));
 		pn4.add(searchCondition);
 		pn4.add(emptyLbl1);
