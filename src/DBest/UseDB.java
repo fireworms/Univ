@@ -2,8 +2,7 @@ package DBest;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 public class UseDB {
 
@@ -12,40 +11,16 @@ public class UseDB {
 	private ResultSet rs = null;
 	private String tblName = "major";
 
-	public void select(DefaultTableModel dtm) throws Exception {
-		dtm.setRowCount(0);
+	public ArrayList<DepData> selectAll() throws Exception {
 		String sql = "select * from " + tblName;
-		rs = doSelect(sql);
-		try {
-			while (rs.next()) {
-				String[] row = { rs.getString("code"),
-						rs.getString("department"), rs.getString("major") };
-				dtm.addRow(row);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		return doSelectAll(sql);
 	}
 
-	public void select(DefaultTableModel dtm, String condition, String text)
+	public ArrayList<DepData> select(String condition, String text)
 			throws Exception {
-		dtm.setRowCount(0);
 		condition = conditions(condition);
-		String sql = "select * from " + tblName + " where " + condition
-				+ " = ?";
-
-		rs = doSelect(sql, text);
-		try {
-			while (rs.next()) {
-				String[] row = { rs.getString("code"),
-						rs.getString("department"), rs.getString("major") };
-				dtm.addRow(row);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		String sql = "select * from " + tblName + " where " + condition + " = ?";
+		return doSelect(sql, text);
 	}
 
 	public void insert(String condition, String department, String major)
@@ -70,15 +45,12 @@ public class UseDB {
 		switch (condition) {
 		case "학과코드":
 			condition = "code";
-			System.out.println(condition);
 			break;
 		case "학과명":
 			condition = "department";
-			System.out.println(condition);
 			break;
 		case "전공명":
 			condition = "major";
-			System.out.println(condition);
 			break;
 		}
 		return condition;
@@ -111,16 +83,38 @@ public class UseDB {
 		isSuccess = pstmt.executeUpdate();
 	}
 
-	private ResultSet doSelect(String sql) throws Exception {
+	private ArrayList<DepData> doSelectAll(String sql) throws Exception {
+		ArrayList<DepData> dep = new ArrayList<DepData>();
 		pstmt = dbconn.conn.prepareStatement(sql);
 		rs = pstmt.executeQuery();
-		return rs;
+		try {
+			while (rs.next()) {
+				String code = rs.getString("code"); 
+				String department = rs.getString("department");
+				String major = rs.getString("major");
+				dep.add(new DepData(code, department, major));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dep;
 	}
 
-	private ResultSet doSelect(String sql, String text) throws Exception {
+	private ArrayList<DepData> doSelect(String sql, String text) throws Exception {
+		ArrayList<DepData> dep = new ArrayList<DepData>();
 		pstmt = dbconn.conn.prepareStatement(sql);
 		pstmt.setString(1, text);
 		rs = pstmt.executeQuery();
-		return rs;
+		try {
+			while (rs.next()) {
+				String code = rs.getString("code"); 
+				String department = rs.getString("department");
+				String major = rs.getString("major");
+				dep.add(new DepData(code, department, major));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dep;
 	}
 }
