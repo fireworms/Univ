@@ -4,12 +4,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class UseDB {
+public class DepDAO {
 
 	private DBConn dbconn = new DBConn();
 	private PreparedStatement pstmt;
 	private ResultSet rs = null;
-	private String tblName = "major";
+	private String tblName;
+	
+	public DepDAO(String tblName){
+		this.tblName = tblName;
+	}
 
 	public ArrayList<DepData> selectAll() throws Exception {
 		String sql = "select * from " + tblName;

@@ -16,9 +16,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import DBest.UseDB;
+import DBest.DepDAO;
 
 public class DepartmentView {
+	DepartmentMain view;
 	int width = 620;
 	Container contentPane;
 	JLabel emptyLbl1 = new JLabel("  ");
@@ -34,11 +35,15 @@ public class DepartmentView {
 	DefaultTableModel dtm;
 	JTable table;
 	int index = 0;
-	UseDB db = new UseDB();
+	DepDAO db = new DepDAO("major");
 	boolean tableSelected = false;
 	boolean isModifying = false;
 	
-	public void setGUIs(DepartmentMain view) {
+	public DepartmentView(DepartmentMain view){
+		this.view = view;
+	}
+	
+	public void setGUIs() {
 		view.setSize(new Dimension(width, 550));
 		contentPane = view.getContentPane();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -146,7 +151,7 @@ public class DepartmentView {
 		exit.setBackground(Color.black);
 		pn6.add(exit);
 		
-		DepartmentAction controll = new DepartmentAction();
+		DepartmentAction controll = new DepartmentAction(view);
 		controll.setListeners(this);
 	}
 

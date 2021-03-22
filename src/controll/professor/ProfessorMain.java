@@ -1,20 +1,19 @@
-package controll.department;
+package controll.professor;
 
 import javax.swing.JFrame;
 
-public class DepartmentMain extends JFrame {
+public class ProfessorMain extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	DepartmentMain() {
+	ProfessorMain() {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		DepartmentView view = new DepartmentView(this);
+		ProfessorView view = new ProfessorView(this);
 		view.setGUIs();
 	}
 
 	public static void main(String[] args) {
-		DepartmentMain a = new DepartmentMain();
+		ProfessorMain a = new ProfessorMain();
 		a.setVisible(true);
 	}
-
 }
