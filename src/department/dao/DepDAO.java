@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import dbconnection.DBConn;
+import department.vo.DepData;
 
 public class DepDAO {
 
@@ -62,7 +63,7 @@ public class DepDAO {
 		return condition;
 	}
 
-	private void doModify(String sql, String department, String major,
+	private int doModify(String sql, String department, String major,
 			String oldCode) throws Exception {
 		int isSuccess = 0;
 		pstmt = dbconn.conn.prepareStatement(sql);
@@ -70,16 +71,18 @@ public class DepDAO {
 		pstmt.setString(2, major);
 		pstmt.setString(3, oldCode);
 		isSuccess = pstmt.executeUpdate();
+		return isSuccess;
 	}
 
-	private void doRemove(String sql, String value) throws Exception {
+	private int doRemove(String sql, String value) throws Exception {
 		int isSuccess = 0;
 		pstmt = dbconn.conn.prepareStatement(sql);
 		pstmt.setString(1, value);
 		isSuccess = pstmt.executeUpdate();
+		return isSuccess;
 	}
 
-	private void doInsert(String sql, String condition, String department,
+	private int doInsert(String sql, String condition, String department,
 			String major) throws Exception {
 		int isSuccess = 0;
 		pstmt = dbconn.conn.prepareStatement(sql);
@@ -87,6 +90,7 @@ public class DepDAO {
 		pstmt.setString(2, department);
 		pstmt.setString(3, major);
 		isSuccess = pstmt.executeUpdate();
+		return isSuccess;
 	}
 
 	private ArrayList<DepData> doSelectAll(String sql) throws Exception {

@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import professor.vo.ProData;
 import dbconnection.DBConn;
 
 public class ProDAO {
@@ -60,7 +61,7 @@ public class ProDAO {
 		doRemove(sql, value);
 	}
 
-	private void doModify(String sql, ProData tempPro) throws Exception {
+	private int doModify(String sql, ProData tempPro) throws Exception {
 		int isSuccess = 0;
 		pstmt = dbconn.conn.prepareStatement(sql);
 		pstmt.setString(1, tempPro.getProName());
@@ -74,16 +75,18 @@ public class ProDAO {
 		pstmt.setString(9, tempPro.getProLab());
 		pstmt.setString(10, tempPro.getProCode());
 		isSuccess = pstmt.executeUpdate();
+		return isSuccess;
 	}
 
-	private void doRemove(String sql, String value) throws Exception {
+	private int doRemove(String sql, String value) throws Exception {
 		int isSuccess = 0;
 		pstmt = dbconn.conn.prepareStatement(sql);
 		pstmt.setString(1, value);
 		isSuccess = pstmt.executeUpdate();
+		return isSuccess;
 	}
 
-	private void doInsert(String sql, ProData tempPro) throws Exception {
+	private int doInsert(String sql, ProData tempPro) throws Exception {
 		int isSuccess = 0;
 		pstmt = dbconn.conn.prepareStatement(sql);
 		pstmt.setString(1, tempPro.getProCode());
@@ -97,6 +100,7 @@ public class ProDAO {
 		pstmt.setString(9, tempPro.getProMajor());
 		pstmt.setString(10, tempPro.getProLab());
 		isSuccess = pstmt.executeUpdate();
+		return isSuccess;
 	}
 
 	private ArrayList<ProData> doSelectAll(String sql) throws Exception {

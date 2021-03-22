@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import department.dao.DepData;
+import department.vo.DepData;
 
 public class DepartmentAction {
 	DepartmentMain main;

@@ -1,4 +1,4 @@
-package professor.dao;
+package professor.vo;
 
 public class ProData {
 

@@ -1,4 +1,4 @@
-package department.dao;
+package department.vo;
 
 public class DepData {
 
