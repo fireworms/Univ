@@ -1,4 +1,4 @@
-package controll.department;
+package department.controll;
 
 import javax.swing.JFrame;
 

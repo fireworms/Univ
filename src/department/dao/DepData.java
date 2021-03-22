@@ -1,4 +1,4 @@
-package dao.department;
+package department.dao;
 
 public class DepData {
 

@@ -1,4 +1,4 @@
-package controll.department;
+package department.controll;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import dao.department.DepData;
+import department.dao.DepData;
 
 public class DepartmentAction {
 	DepartmentMain main;

@@ -1,4 +1,4 @@
-package controll.professor;
+package professor.controll;
 
 import javax.swing.JFrame;
 

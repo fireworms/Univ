@@ -1,10 +1,10 @@
-package dao.department;
+package department.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import db.DBConn;
+import dbconnection.DBConn;
 
 public class DepDAO {
 

@@ -1,4 +1,4 @@
-package controll.professor;
+package professor.controll;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -16,7 +16,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import dao.professor.ProDAO;
+import professor.dao.ProDAO;
 
 public class ProfessorView {
 	ProfessorMain view;

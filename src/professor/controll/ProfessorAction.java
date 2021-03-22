@@ -1,4 +1,4 @@
-package controll.professor;
+package professor.controll;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import dao.professor.ProData;
+import professor.dao.ProData;
 
 public class ProfessorAction {
 	ProfessorMain main;
