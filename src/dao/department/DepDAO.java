@@ -1,8 +1,10 @@
-package DBest;
+package dao.department;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import DBest.DBConn;
 
 public class DepDAO {
 

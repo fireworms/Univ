@@ -1,8 +1,10 @@
-package DBest;
+package dao.professor;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import DBest.DBConn;
 
 public class ProDAO {
 

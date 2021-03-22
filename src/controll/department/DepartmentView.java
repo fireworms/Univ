@@ -16,7 +16,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import DBest.DepDAO;
+import dao.department.DepDAO;
 
 public class DepartmentView {
 	DepartmentMain view;

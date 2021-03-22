@@ -1,4 +1,4 @@
-package DBest;
+package dao.department;
 
 public class DepData {
 

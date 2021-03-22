@@ -16,7 +16,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import DBest.ProDAO;
+import dao.professor.ProDAO;
 
 public class ProfessorView {
 	ProfessorMain view;

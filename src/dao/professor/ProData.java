@@ -1,4 +1,4 @@
-package DBest;
+package dao.professor;
 
 public class ProData {
 
