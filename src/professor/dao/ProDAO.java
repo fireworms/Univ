@@ -30,30 +30,18 @@ public class ProDAO {
 		return doSelect(sql, text);
 	}
 
-	public void insert(String proCode, String proName, String proAddr,
-			String proJuminNum_1, String proJuminNum_2, String proCellphone,
-			String proPhone, String proHireYear, String proDegree,
-			String proMajor, String proLab) throws Exception {
+	public void insert(ProData addPro) throws Exception {
 		String sql = "insert into " + tblName
 				+ " select ?, ?, ?, ?, ?, ?, ?, ?, ?, ? from dual";
-		ProData tempPro = new ProData(proCode, proName, proJuminNum_1,
-				proJuminNum_2, proAddr, proCellphone, proPhone, proHireYear,
-				proDegree, proMajor, proLab);
-		doInsert(sql, tempPro);
+		doInsert(sql, addPro);
 	}
 
-	public void modify(String proName, String proAddr, String proJuminNum_1,
-			String proJuminNum_2, String proCellphone, String proPhone,
-			String proHireYear, String proDegree, String proMajor,
-			String proLab, String oldCode) throws Exception {
+	public void modify(ProData modifyPro) throws Exception {
 		String sql = "update "
 				+ tblName
 				+ " set name = ?, addr = ?, juminnum = ?, cellphone = ?, phone = ?, hireyear = ?, degree = ?, department = ?, labnum = ?"
 				+ " where code = ?";
-		ProData tempPro = new ProData(oldCode, proName, proJuminNum_1,
-				proJuminNum_2, proAddr, proCellphone, proPhone, proHireYear,
-				proDegree, proMajor, proLab);
-		doModify(sql, tempPro);
+		doModify(sql, modifyPro);
 	}
 
 	public void remove(String value) throws Exception {
@@ -61,19 +49,19 @@ public class ProDAO {
 		doRemove(sql, value);
 	}
 
-	private int doModify(String sql, ProData tempPro) throws Exception {
+	private int doModify(String sql, ProData modifyPro) throws Exception {
 		int isSuccess = 0;
 		pstmt = dbconn.conn.prepareStatement(sql);
-		pstmt.setString(1, tempPro.getProName());
-		pstmt.setString(2, tempPro.getProAddr());
-		pstmt.setString(3, tempPro.getProJuminNum());
-		pstmt.setString(4, tempPro.getProCellphone());
-		pstmt.setString(5, tempPro.getProPhone());
-		pstmt.setString(6, tempPro.getProHireYear());
-		pstmt.setString(7, tempPro.getProDegree());
-		pstmt.setString(8, tempPro.getProMajor());
-		pstmt.setString(9, tempPro.getProLab());
-		pstmt.setString(10, tempPro.getProCode());
+		pstmt.setString(1, modifyPro.getProName());
+		pstmt.setString(2, modifyPro.getProAddr());
+		pstmt.setString(3, modifyPro.getProJuminNum());
+		pstmt.setString(4, modifyPro.getProCellphone());
+		pstmt.setString(5, modifyPro.getProPhone());
+		pstmt.setString(6, modifyPro.getProHireYear());
+		pstmt.setString(7, modifyPro.getProDegree());
+		pstmt.setString(8, modifyPro.getProMajor());
+		pstmt.setString(9, modifyPro.getProLab());
+		pstmt.setString(10, modifyPro.getProCode());
 		isSuccess = pstmt.executeUpdate();
 		return isSuccess;
 	}
@@ -86,19 +74,19 @@ public class ProDAO {
 		return isSuccess;
 	}
 
-	private int doInsert(String sql, ProData tempPro) throws Exception {
+	private int doInsert(String sql, ProData addPro) throws Exception {
 		int isSuccess = 0;
 		pstmt = dbconn.conn.prepareStatement(sql);
-		pstmt.setString(1, tempPro.getProCode());
-		pstmt.setString(2, tempPro.getProName());
-		pstmt.setString(3, tempPro.getProAddr());
-		pstmt.setString(4, tempPro.getProJuminNum());
-		pstmt.setString(5, tempPro.getProCellphone());
-		pstmt.setString(6, tempPro.getProPhone());
-		pstmt.setString(7, tempPro.getProHireYear());
-		pstmt.setString(8, tempPro.getProDegree());
-		pstmt.setString(9, tempPro.getProMajor());
-		pstmt.setString(10, tempPro.getProLab());
+		pstmt.setString(1, addPro.getProCode());
+		pstmt.setString(2, addPro.getProName());
+		pstmt.setString(3, addPro.getProAddr());
+		pstmt.setString(4, addPro.getProJuminNum());
+		pstmt.setString(5, addPro.getProCellphone());
+		pstmt.setString(6, addPro.getProPhone());
+		pstmt.setString(7, addPro.getProHireYear());
+		pstmt.setString(8, addPro.getProDegree());
+		pstmt.setString(9, addPro.getProMajor());
+		pstmt.setString(10, addPro.getProLab());
 		isSuccess = pstmt.executeUpdate();
 		return isSuccess;
 	}

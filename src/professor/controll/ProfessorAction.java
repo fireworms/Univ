@@ -39,42 +39,18 @@ public class ProfessorAction {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				String[] conditionStr = { "교수코드", "이 름", "주 소", "주민등록번호",
+						"휴대폰", "전 화", "임용년도", "학 위", "학과/전공", "연구실" };
 				String[] targetStr = { "code", "name", "addr", "juminnum",
 						"cellphone", "phone", "hireyear", "degree",
 						"department", "labnum" };
-				String condition = null;
+				String condition = view.searchCondition.getSelectedItem()
+						.toString();
 				String searchText = null;
-				switch (view.searchCondition.getSelectedItem().toString()) {
-				case "교수코드":
-					condition = targetStr[0];
-					break;
-				case "이 름":
-					condition = targetStr[1];
-					break;
-				case "주 소":
-					condition = targetStr[2];
-					break;
-				case "주민등록번호":
-					condition = targetStr[3];
-					break;
-				case "휴대폰":
-					condition = targetStr[4];
-					break;
-				case "전 화":
-					condition = targetStr[5];
-					break;
-				case "임용년도":
-					condition = targetStr[6];
-					break;
-				case "학 위":
-					condition = targetStr[7];
-					break;
-				case "학과/전공":
-					condition = targetStr[8];
-					break;
-				case "연구실":
-					condition = targetStr[9];
-					break;
+				for(int i = 0; i < conditionStr.length; i++){
+					if (condition.equals(conditionStr[i])) {
+						condition = targetStr[i];
+					}
 				}
 				try {
 					searchText = view.searchBox.getText();
@@ -110,17 +86,18 @@ public class ProfessorAction {
 
 				if (nullCheck()) {
 					try {
-						view.db.insert(view.proCodeTf.getText(),
+						ProData addPro = new ProData(view.proCodeTf.getText(),
 								view.proNameTf.getText(),
-								view.proAddrTf.getText(),
 								view.proJuminNum_1Tf.getText(),
 								view.proJuminNum_2Tf.getText(),
+								view.proAddrTf.getText(),
 								view.proCellphoneTf.getText(),
 								view.proPhoneTf.getText(),
 								view.proHireYearTf.getText(),
 								view.proDegreeTf.getText(),
 								view.proMajorTf.getText(),
 								view.proLabTf.getText());
+						view.db.insert(addPro);
 						showTable();
 						clearField();
 					} catch (Exception e) {
@@ -174,18 +151,18 @@ public class ProfessorAction {
 					if (nullCheck()) {
 						if (JOptionPane.showConfirmDialog(null, "수정하실겁니까요") == 0) {
 							try {
-								view.db.modify(view.proNameTf.getText(),
-										view.proAddrTf.getText(),
+								ProData modifyPro = new ProData(view.proCodeTf.getText(),
+										view.proNameTf.getText(),
 										view.proJuminNum_1Tf.getText(),
 										view.proJuminNum_2Tf.getText(),
+										view.proAddrTf.getText(),
 										view.proCellphoneTf.getText(),
 										view.proPhoneTf.getText(),
 										view.proHireYearTf.getText(),
 										view.proDegreeTf.getText(),
 										view.proMajorTf.getText(),
-										view.proLabTf.getText(), view.table
-												.getValueAt(view.index, 0)
-												.toString());
+										view.proLabTf.getText());
+								view.db.modify(modifyPro);
 								showTable();
 								clearField();
 								view.proCodeTf.setEditable(true);

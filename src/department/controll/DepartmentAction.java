@@ -113,7 +113,7 @@ public class DepartmentAction {
 			public void actionPerformed(ActionEvent e) {
 				if (view.isModifying) {
 					if (nullCheck()) {
-						if (JOptionPane.showConfirmDialog(null, "수정하실겁니까요") == 0) {
+						if (JOptionPane.showConfirmDialog(null, "수정하실겁니까") == 0) {
 							try {
 								view.db.modify(view.depNameTf.getText(),
 										view.depMajorTf.getText(), view.table
