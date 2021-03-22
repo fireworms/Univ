@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import DBest.DBConn;
+import db.DBConn;
 
 public class ProDAO {
 
