@@ -1,4 +1,4 @@
-package professor.controll;
+package univ.controll;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -10,28 +10,29 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import professor.vo.ProData;
+import univ.ui.StudentMain;
+import univ.vo.StuData;
 
-public class ProfessorAction {
-	ProfessorMain main;
-	ProfessorView view;
+public class StudentAction {
+	StudentMain main;
+	StudentView view;
 	JTextField[] check;
 
-	public ProfessorAction(ProfessorMain main, ProfessorView view) {
+	public StudentAction(StudentMain main, StudentView view) {
 		this.main = main;
 		this.view = view;
 		check = new JTextField[11];
-		check[0] = view.proCodeTf;
-		check[1] = view.proNameTf;
-		check[2] = view.proJuminNum_1Tf;
-		check[3] = view.proJuminNum_2Tf;
-		check[4] = view.proAddrTf;
-		check[5] = view.proCellphoneTf;
-		check[6] = view.proPhoneTf;
-		check[7] = view.proHireYearTf;
-		check[8] = view.proDegreeTf;
-		check[9] = view.proMajorTf;
-		check[10] = view.proLabTf;
+		check[0] = view.stuCodeTf;
+		check[1] = view.stuNameTf;
+		check[2] = view.stuJuminNum_1Tf;
+		check[3] = view.stuJuminNum_2Tf;
+		check[4] = view.stuAddrTf;
+		check[5] = view.stuCellphoneTf;
+		check[6] = view.stuPhoneTf;
+		check[7] = view.stuEntYearTf;
+		check[8] = view.stuHighSchoolTf;
+		check[9] = view.stuGradTf;
+		check[10] = view.stuDepCodeTf;
 	}
 
 	public void setListeners() {
@@ -39,11 +40,11 @@ public class ProfessorAction {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String[] conditionStr = { "교수코드", "이 름", "주 소", "주민등록번호",
-						"휴대폰", "전 화", "임용년도", "학 위", "학과/전공", "연구실" };
+				String[] conditionStr = { "학 번", "이 름", "주 소", "주민등록번호",
+						"휴대폰", "전 화", "입학년도", "졸업고교", "고교졸업년도", "학과/전공", "지도교수"};
 				String[] targetStr = { "code", "name", "addr", "juminnum",
-						"cellphone", "phone", "hireyear", "degree",
-						"department", "labnum" };
+						"cellphone", "phone", "entyear", "highschool",
+						"gradyear", "depcode", "procode" };
 				String condition = view.searchCondition.getSelectedItem()
 						.toString();
 				String searchText = null;
@@ -54,11 +55,11 @@ public class ProfessorAction {
 				}
 				try {
 					searchText = view.searchBox.getText();
-					ArrayList<ProData> pro = view.db.select(condition,
+					ArrayList<StuData> stu = view.db.select(condition,
 							searchText);
 					view.dtm.setRowCount(0);
-					for (int i = 0; i < pro.size(); i++) {
-						view.dtm.addRow(pro.get(i).toArray());
+					for (int i = 0; i < stu.size(); i++) {
+						view.dtm.addRow(stu.get(i).toArray());
 					}
 				} catch (Exception e) {
 					System.out.println("오류같은걸 끼얹나?");
@@ -86,24 +87,25 @@ public class ProfessorAction {
 
 				if (nullCheck()) {
 					try {
-						ProData addPro = new ProData(view.proCodeTf.getText(),
-								view.proNameTf.getText(),
-								view.proJuminNum_1Tf.getText(),
-								view.proJuminNum_2Tf.getText(),
-								view.proAddrTf.getText(),
-								view.proCellphoneTf.getText(),
-								view.proPhoneTf.getText(),
-								view.proHireYearTf.getText(),
-								view.proDegreeTf.getText(),
-								view.proMajorTf.getText(),
-								view.proLabTf.getText());
-						view.db.insert(addPro);
+						StuData addstu = new StuData(view.stuCodeTf.getText(),
+								view.stuNameTf.getText(),
+								view.stuJuminNum_1Tf.getText(),
+								view.stuJuminNum_2Tf.getText(),
+								view.stuAddrTf.getText(),
+								view.stuCellphoneTf.getText(),
+								view.stuPhoneTf.getText(),
+								view.stuEntYearTf.getText(),
+								view.stuHighSchoolTf.getText(),
+								view.stuGradTf.getText(),
+								view.stuDepCodeTf.getText(),
+								view.stuProCodeTf.getText());
+						view.db.insert(addstu);
 						showTable();
 						clearField();
 					} catch (Exception e) {
 						e.printStackTrace();
 						JOptionPane.showMessageDialog(null, "등록 실패");
-						view.proCodeTf.requestFocus();
+						view.stuCodeTf.requestFocus();
 					}
 				}
 			}
@@ -151,21 +153,22 @@ public class ProfessorAction {
 					if (nullCheck()) {
 						if (JOptionPane.showConfirmDialog(null, "수정하실겁니까요") == 0) {
 							try {
-								ProData modifyPro = new ProData(view.proCodeTf.getText(),
-										view.proNameTf.getText(),
-										view.proJuminNum_1Tf.getText(),
-										view.proJuminNum_2Tf.getText(),
-										view.proAddrTf.getText(),
-										view.proCellphoneTf.getText(),
-										view.proPhoneTf.getText(),
-										view.proHireYearTf.getText(),
-										view.proDegreeTf.getText(),
-										view.proMajorTf.getText(),
-										view.proLabTf.getText());
-								view.db.modify(modifyPro);
+								StuData modifystu = new StuData(view.stuCodeTf.getText(),
+										view.stuNameTf.getText(),
+										view.stuJuminNum_1Tf.getText(),
+										view.stuJuminNum_2Tf.getText(),
+										view.stuAddrTf.getText(),
+										view.stuCellphoneTf.getText(),
+										view.stuPhoneTf.getText(),
+										view.stuEntYearTf.getText(),
+										view.stuHighSchoolTf.getText(),
+										view.stuGradTf.getText(),
+										view.stuDepCodeTf.getText(),
+										view.stuProCodeTf.getText());
+								view.db.modify(modifystu);
 								showTable();
 								clearField();
-								view.proCodeTf.setEditable(true);
+								view.stuCodeTf.setEditable(true);
 								view.modify.setBackground(Color.yellow);
 								view.modify.setForeground(Color.gray);
 								view.tableSelected = false;
@@ -178,11 +181,11 @@ public class ProfessorAction {
 				} else {
 					if (view.tableSelected) {
 						view.isModifying = true;
-						view.proCodeTf.setText(view.table.getValueAt(
+						view.stuCodeTf.setText(view.table.getValueAt(
 								view.index, 0).toString());
 						view.modify.setBackground(Color.LIGHT_GRAY);
 						view.modify.setForeground(Color.black);
-						view.proCodeTf.setEditable(false);
+						view.stuCodeTf.setEditable(false);
 					}
 				}
 			}
@@ -204,25 +207,27 @@ public class ProfessorAction {
 				view.index = view.table.getSelectedRow();
 				String[] jumin = view.table.getValueAt(view.index, 3)
 						.toString().split("-");
-				view.proCodeTf.setText(view.table.getValueAt(view.index, 0)
+				view.stuCodeTf.setText(view.table.getValueAt(view.index, 0)
 						.toString());
-				view.proNameTf.setText(view.table.getValueAt(view.index, 1)
+				view.stuNameTf.setText(view.table.getValueAt(view.index, 1)
 						.toString());
-				view.proAddrTf.setText(view.table.getValueAt(view.index, 2)
+				view.stuAddrTf.setText(view.table.getValueAt(view.index, 2)
 						.toString());
-				view.proJuminNum_1Tf.setText(jumin[0]);
-				view.proJuminNum_2Tf.setText(jumin[1]);
-				view.proCellphoneTf.setText(view.table
+				view.stuJuminNum_1Tf.setText(jumin[0]);
+				view.stuJuminNum_2Tf.setText(jumin[1]);
+				view.stuCellphoneTf.setText(view.table
 						.getValueAt(view.index, 4).toString());
-				view.proPhoneTf.setText(view.table.getValueAt(view.index, 5)
+				view.stuPhoneTf.setText(view.table.getValueAt(view.index, 5)
 						.toString());
-				view.proHireYearTf.setText(view.table.getValueAt(view.index, 6)
+				view.stuEntYearTf.setText(view.table.getValueAt(view.index, 6)
 						.toString());
-				view.proDegreeTf.setText(view.table.getValueAt(view.index, 7)
+				view.stuHighSchoolTf.setText(view.table.getValueAt(view.index, 7)
 						.toString());
-				view.proMajorTf.setText(view.table.getValueAt(view.index, 8)
+				view.stuGradTf.setText(view.table.getValueAt(view.index, 8)
 						.toString());
-				view.proLabTf.setText(view.table.getValueAt(view.index, 9)
+				view.stuDepCodeTf.setText(view.table.getValueAt(view.index, 9)
+						.toString());
+				view.stuProCodeTf.setText(view.table.getValueAt(view.index, 10)
 						.toString());
 			}
 		});
@@ -232,7 +237,7 @@ public class ProfessorAction {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				if (!arg0.getSource().equals(view.table)) {
-					view.proCodeTf.setEditable(true);
+					view.stuCodeTf.setEditable(true);
 					view.modify.setBackground(Color.yellow);
 					view.modify.setForeground(Color.gray);
 					view.tableSelected = false;
@@ -254,10 +259,10 @@ public class ProfessorAction {
 	}
 
 	private void showTable() throws Exception {
-		ArrayList<ProData> pro = view.db.selectAll();
+		ArrayList<StuData> stu = view.db.selectAll();
 		view.dtm.setRowCount(0);
-		for (int i = 0; i < pro.size(); i++) {
-			view.dtm.addRow(pro.get(i).toArray());
+		for (int i = 0; i < stu.size(); i++) {
+			view.dtm.addRow(stu.get(i).toArray());
 		}
 	}
 

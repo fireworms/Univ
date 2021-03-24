@@ -1,4 +1,4 @@
-package department.controll;
+package univ.controll;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -16,7 +16,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import department.dao.DepDAO;
+import univ.dao.DepDAO;
+import univ.ui.DepartmentMain;
 
 public class DepartmentView {
 	DepartmentMain view;

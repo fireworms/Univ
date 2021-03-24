@@ -1,13 +1,16 @@
-package professor.controll;
+package univ.ui;
 
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 
-public class ProfessorMain extends JFrame {
+import univ.controll.ProfessorView;
 
+public class ProfessorMain extends JDialog {
+	
 	private static final long serialVersionUID = 1L;
 
-	ProfessorMain() {
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	public ProfessorMain() {
+		this.setModal(true);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		ProfessorView view = new ProfessorView(this);
 		view.setGUIs();
 	}

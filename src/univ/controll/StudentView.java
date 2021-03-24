@@ -1,4 +1,4 @@
-package professor.controll;
+package univ.controll;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -16,10 +16,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import professor.dao.ProDAO;
+import univ.dao.StuDAO;
+import univ.ui.StudentMain;
 
-public class ProfessorView {
-	ProfessorMain view;
+public class StudentView {
+	StudentMain view;
 	int width = 820;
 	Container contentPane;
 	JLabel emptyLbl1 = new JLabel("  ");
@@ -28,24 +29,24 @@ public class ProfessorView {
 	JButton bn;
 	JPanel pn1, pn2_1, pn2_2, pn2_3, pn2_4, pn2_5, pn3, pn4, pn6;
 	JScrollPane pn5;
-	JLabel topLbl, proCodeLbl, proNameLbl, proJuminNum_1Lbl, proJuminNum_2Lbl,
-			proAddrLbl, proCellphoneLbl, proPhoneLbl, proHireYearLbl,
-			proDegreeLbl, proMajorLbl, proLabLbl;
-	JTextField proCodeTf, proNameTf, proJuminNum_1Tf, proJuminNum_2Tf,
-			proAddrTf, proCellphoneTf, proPhoneTf, proHireYearTf, proDegreeTf,
-			proMajorTf, proLabTf, searchBox;
+	JLabel topLbl, stuCodeLbl, stuNameLbl, stuJuminNum_1Lbl, stuJuminNum_2Lbl,
+			stuAddrLbl, stuCellphoneLbl, stuPhoneLbl, stuEntYearLbl,
+			stuHighSchoolLbl, stuGradLbl, stuDepCodeLbl, stuProCodeLbl;
+	JTextField stuCodeTf, stuNameTf, stuJuminNum_1Tf, stuJuminNum_2Tf,
+			stuAddrTf, stuCellphoneTf, stuPhoneTf, stuEntYearTf, stuHighSchoolTf,
+			stuGradTf, stuDepCodeTf, stuProCodeTf, searchBox;
 	JComboBox<String> searchCondition;
 	JButton select, selectAll, insert, modify, remove, exit;
 	DefaultTableModel dtm;
 	JTable table;
 	int index = 0;
-	ProDAO db = new ProDAO("professor");
-	String[] conditions = { "교수코드", "이 름", "주 소", "주민등록번호", "휴대폰", "전 화",
-			"임용년도", "학 위", "학과/전공", "연구실" };
+	StuDAO db = new StuDAO("Student");
+	String[] conditions = { "학 번", "이 름", "주 소", "주민등록번호", "휴대폰", "전 화",
+			"입학년도", "졸업고교", "고교졸업년도", "학과/전공" , "지도교수"};
 	boolean tableSelected = false;
 	boolean isModifying = false;
 
-	public ProfessorView(ProfessorMain view) {
+	public StudentView(StudentMain view) {
 		this.view = view;
 	}
 
@@ -92,7 +93,7 @@ public class ProfessorView {
 		pn2_5.setMinimumSize(new Dimension(width, 40));
 		pn2_5.setMaximumSize(new Dimension(width, 40));
 		pn2_5.setLayout(new BoxLayout(pn2_5, BoxLayout.X_AXIS));
-		pn2_5.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 640));
+		pn2_5.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 340));
 		contentPane.add(pn2_5);
 
 		pn4 = new JPanel();
@@ -122,60 +123,66 @@ public class ProfessorView {
 		topLbl = new JLabel("교 수 관 리");
 		pn1.add(topLbl);
 
-		proCodeLbl = new JLabel("교수코드 ");
-		pn2_1.add(proCodeLbl);
-		proCodeTf = new JTextField();
-		pn2_1.add(proCodeTf);
+		stuCodeLbl = new JLabel("학 번 ");
+		pn2_1.add(stuCodeLbl);
+		stuCodeTf = new JTextField();
+		pn2_1.add(stuCodeTf);
 
-		proNameLbl = new JLabel(" 이 름 ");
-		pn2_1.add(proNameLbl);
-		proNameTf = new JTextField();
-		pn2_1.add(proNameTf);
+		stuNameLbl = new JLabel(" 이 름 ");
+		pn2_1.add(stuNameLbl);
+		stuNameTf = new JTextField();
+		pn2_1.add(stuNameTf);
 
-		proJuminNum_1Lbl = new JLabel(" 주민번호 ");
-		pn2_1.add(proJuminNum_1Lbl);
-		proJuminNum_1Tf = new JTextField();
-		pn2_1.add(proJuminNum_1Tf);
+		stuJuminNum_1Lbl = new JLabel(" 주민번호 ");
+		pn2_1.add(stuJuminNum_1Lbl);
+		stuJuminNum_1Tf = new JTextField();
+		pn2_1.add(stuJuminNum_1Tf);
 
-		proJuminNum_2Lbl = new JLabel(" - ");
-		pn2_1.add(proJuminNum_2Lbl);
-		proJuminNum_2Tf = new JTextField();
-		pn2_1.add(proJuminNum_2Tf);
+		stuJuminNum_2Lbl = new JLabel(" - ");
+		pn2_1.add(stuJuminNum_2Lbl);
+		stuJuminNum_2Tf = new JTextField();
+		pn2_1.add(stuJuminNum_2Tf);
 
-		proAddrLbl = new JLabel("주    소 ");
-		pn2_2.add(proAddrLbl);
-		proAddrTf = new JTextField();
-		pn2_2.add(proAddrTf);
+		stuAddrLbl = new JLabel("주    소 ");
+		pn2_2.add(stuAddrLbl);
+		stuAddrTf = new JTextField();
+		pn2_2.add(stuAddrTf);
 
-		proCellphoneLbl = new JLabel("휴대폰 ");
-		pn2_3.add(proCellphoneLbl);
-		proCellphoneTf = new JTextField();
-		pn2_3.add(proCellphoneTf);
+		stuCellphoneLbl = new JLabel("휴대폰 ");
+		pn2_3.add(stuCellphoneLbl);
+		stuCellphoneTf = new JTextField();
+		pn2_3.add(stuCellphoneTf);
 
-		proPhoneLbl = new JLabel(" 전 화 ");
-		pn2_3.add(proPhoneLbl);
-		proPhoneTf = new JTextField();
-		pn2_3.add(proPhoneTf);
+		stuPhoneLbl = new JLabel(" 전 화 ");
+		pn2_3.add(stuPhoneLbl);
+		stuPhoneTf = new JTextField();
+		pn2_3.add(stuPhoneTf);
 
-		proHireYearLbl = new JLabel("임용년도 ");
-		pn2_4.add(proHireYearLbl);
-		proHireYearTf = new JTextField();
-		pn2_4.add(proHireYearTf);
+		stuEntYearLbl = new JLabel("입학년도 ");
+		pn2_4.add(stuEntYearLbl);
+		stuEntYearTf = new JTextField();
+		pn2_4.add(stuEntYearTf);
 
-		proDegreeLbl = new JLabel("      학 위 ");
-		pn2_4.add(proDegreeLbl);
-		proDegreeTf = new JTextField();
-		pn2_4.add(proDegreeTf);
+		stuHighSchoolLbl = new JLabel("      졸업고교 ");
+		pn2_4.add(stuHighSchoolLbl);
+		stuHighSchoolTf = new JTextField();
+		pn2_4.add(stuHighSchoolTf);
 
-		proMajorLbl = new JLabel(" 학과 / 전공 ");
-		pn2_4.add(proMajorLbl);
-		proMajorTf = new JTextField();
-		pn2_4.add(proMajorTf);
+		stuGradLbl = new JLabel(" 고교졸업년도 ");
+		pn2_4.add(stuGradLbl);
+		stuGradTf = new JTextField();
+		pn2_4.add(stuGradTf);
 
-		proLabLbl = new JLabel("연구실 ");
-		pn2_5.add(proLabLbl);
-		proLabTf = new JTextField();
-		pn2_5.add(proLabTf);
+		stuDepCodeLbl = new JLabel("학과/전공 ");
+		pn2_5.add(stuDepCodeLbl);
+		stuDepCodeTf = new JTextField();
+		pn2_5.add(stuDepCodeTf);
+		
+		stuProCodeLbl = new JLabel("지도교수 ");
+		pn2_5.add(stuProCodeLbl);
+		stuProCodeTf = new JTextField();
+		pn2_5.add(stuProCodeTf);
+		
 		searchCondition = new JComboBox<String>(conditions);
 		searchCondition.setPreferredSize(new Dimension(100, 20));
 		pn4.add(searchCondition);
@@ -209,7 +216,7 @@ public class ProfessorView {
 		exit.setBackground(Color.black);
 		pn6.add(exit);
 
-		ProfessorAction controll = new ProfessorAction(view, this);
+		StudentAction controll = new StudentAction(view, this);
 		controll.setListeners();
 	}
 

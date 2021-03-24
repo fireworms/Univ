@@ -1,10 +1,10 @@
-package professor.dao;
+package univ.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import professor.vo.ProData;
+import univ.vo.ProData;
 import dbconnection.DBConn;
 
 public class ProDAO {

@@ -1,15 +1,19 @@
-package department.controll;
+package univ.ui;
 
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 
-public class DepartmentMain extends JFrame {
+import univ.controll.DepartmentView;
+
+public class DepartmentMain extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	DepartmentMain() {
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	public DepartmentMain() {
+		this.setModal(true);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		DepartmentView view = new DepartmentView(this);
 		view.setGUIs();
+		
 	}
 
 	public static void main(String[] args) {

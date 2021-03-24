@@ -1,4 +1,4 @@
-package department.vo;
+package univ.vo;
 
 public class DepData {
 

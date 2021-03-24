@@ -1,4 +1,4 @@
-package professor.vo;
+package univ.vo;
 
 public class ProData {
 
