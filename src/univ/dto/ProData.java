@@ -1,4 +1,4 @@
-package univ.vo;
+package univ.dto;
 
 public class ProData {
 

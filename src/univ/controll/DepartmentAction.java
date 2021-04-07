@@ -7,33 +7,67 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
+import univ.dao.DepDAO;
+import univ.dto.DepData;
 import univ.ui.DepartmentMain;
-import univ.vo.DepData;
 
 public class DepartmentAction {
-	DepartmentMain main;
-	DepartmentView view;
 
-	public DepartmentAction(DepartmentMain main) {
-		this.main = main;
+	DepartmentMain view;
+	JScrollPane pn5;
+	JTextField depCodeTf, depNameTf, depMajorTf, searchBox;
+	JComboBox<String> searchCondition;
+	JButton select, selectAll, insert, modify, remove, exit;
+	DefaultTableModel dtm;
+	JTable table;
+	int index = 0;
+	DepDAO db;
+	boolean tableSelected;
+	boolean isModifying;
+
+	public DepartmentAction(DepartmentMain view) {
+		this.view = view;
+		this.pn5 = view.pn5;
+		this.depCodeTf = view.depCodeTf;
+		this.depNameTf = view.depNameTf;
+		this.depMajorTf = view.depMajorTf;
+		this.searchBox = view.searchBox;
+		this.searchCondition = view.searchCondition;
+		this.select = view.select;
+		this.selectAll = view.selectAll;
+		this.insert = view.insert;
+		this.modify = view.modify;
+		this.remove = view.remove;
+		this.exit = view.exit;
+		this.dtm = view.dtm;
+		this.table = view.table;
+		this.db = new DepDAO("major");
+		this.tableSelected = false;
+		this.isModifying = false;
+		setListeners();
 	}
 
-	public void setListeners(DepartmentView view) {
-		this.view = view;
-		view.select.addActionListener(new ActionListener() {
+	public void setListeners() {
+
+		select.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					ArrayList<DepData> dep = view.db.select(
-							view.searchCondition.getSelectedItem().toString(),
-							view.searchBox.getText());
-					view.dtm.setRowCount(0);
+					ArrayList<DepData> dep = db.select(searchCondition
+							.getSelectedItem().toString(), searchBox.getText());
+					dtm.setRowCount(0);
 					for (int i = 0; i < dep.size(); i++) {
-						view.dtm.addRow(dep.get(i).toArray());
+						dtm.addRow(dep.get(i).toArray());
 					}
 				} catch (Exception e) {
 					System.out.println("오류같은걸 끼얹나?");
@@ -41,7 +75,7 @@ public class DepartmentAction {
 			}
 		});
 
-		view.selectAll.addActionListener(new ActionListener() {
+		selectAll.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -54,37 +88,35 @@ public class DepartmentAction {
 			}
 		});
 
-		view.insert.addActionListener(new ActionListener() {
+		insert.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
 				if (nullCheck()) {
 					try {
-						view.db.insert(view.depCodeTf.getText(),
-								view.depNameTf.getText(),
-								view.depMajorTf.getText());
+						db.insert(depCodeTf.getText(), depNameTf.getText(),
+								depMajorTf.getText());
 						showTable();
 						clearField();
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "등록 실패");
-						view.depCodeTf.requestFocus();
+						depCodeTf.requestFocus();
 					}
 				}
 			}
 		});
 
-		view.remove.addActionListener(new ActionListener() {
+		remove.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (view.tableSelected) {
+				if (tableSelected) {
 					try {
-						if (view.tableSelected) {
-							view.db.remove(view.table.getValueAt(view.index, 0)
-									.toString());
+						if (tableSelected) {
+							db.remove(table.getValueAt(index, 0).toString());
 							showTable();
-							view.tableSelected = false;
+							tableSelected = false;
 							clearField();
 						}
 					} catch (Exception ee) {
@@ -95,11 +127,10 @@ public class DepartmentAction {
 							"몇번째줄 삭제할까", "줄삭제", 0);
 					if (indexString != null && indexString != "") {
 						try {
-							view.index = Integer.parseInt(indexString) - 1;
-							String name = view.dtm.getValueAt(view.index, 0)
-									.toString();
-							view.db.remove(name);
-							view.dtm.removeRow(view.index);
+							index = Integer.parseInt(indexString) - 1;
+							String name = dtm.getValueAt(index, 0).toString();
+							db.remove(name);
+							dtm.removeRow(index);
 						} catch (Exception ee) {
 							JOptionPane.showMessageDialog(null, "잘못된 입력");
 						}
@@ -108,63 +139,59 @@ public class DepartmentAction {
 			}
 		});
 
-		view.modify.addActionListener(new ActionListener() {
+		modify.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (view.isModifying) {
+				if (isModifying) {
 					if (nullCheck()) {
 						if (JOptionPane.showConfirmDialog(null, "수정하실겁니까") == 0) {
 							try {
-								view.db.modify(view.depNameTf.getText(),
-										view.depMajorTf.getText(), view.table
-												.getValueAt(view.index, 0)
-												.toString());
+								db.modify(depNameTf.getText(),
+										depMajorTf.getText(),
+										table.getValueAt(index, 0).toString());
 								showTable();
 								clearField();
-								view.depCodeTf.setEditable(true);
-								view.modify.setBackground(Color.yellow);
-								view.modify.setForeground(Color.gray);
-								view.tableSelected = false;
-								view.isModifying = false;
+								depCodeTf.setEditable(true);
+								modify.setBackground(Color.yellow);
+								modify.setForeground(Color.gray);
+								tableSelected = false;
+								isModifying = false;
 							} catch (Exception ee) {
 								System.out.println("오류같은걸 끼얹나?");
 							}
 						}
 					}
 				} else {
-					if (view.tableSelected) {
-						view.isModifying = true;
-						view.depCodeTf.setText(view.table.getValueAt(
-								view.index, 0).toString());
-						view.modify.setBackground(Color.LIGHT_GRAY);
-						view.modify.setForeground(Color.black);
-						view.depCodeTf.setEditable(false);
+					if (tableSelected) {
+						isModifying = true;
+						depCodeTf
+								.setText(table.getValueAt(index, 0).toString());
+						modify.setBackground(Color.LIGHT_GRAY);
+						modify.setForeground(Color.black);
+						depCodeTf.setEditable(false);
 					}
 				}
 			}
 		});
 
-		view.exit.addActionListener(new ActionListener() {
+		exit.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				main.dispose();
+				view.dispose();
 			}
 		});
 
-		view.table.addMouseListener(new MouseAdapter() {
+		table.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				view.tableSelected = true;
-				view.index = view.table.getSelectedRow();
-				view.depCodeTf.setText(view.table.getValueAt(view.index, 0)
-						.toString());
-				view.depNameTf.setText(view.table.getValueAt(view.index, 1)
-						.toString());
-				view.depMajorTf.setText(view.table.getValueAt(view.index, 2)
-						.toString());
+				tableSelected = true;
+				index = table.getSelectedRow();
+				depCodeTf.setText(table.getValueAt(index, 0).toString());
+				depNameTf.setText(table.getValueAt(index, 1).toString());
+				depMajorTf.setText(table.getValueAt(index, 2).toString());
 			}
 		});
 
@@ -172,46 +199,46 @@ public class DepartmentAction {
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				if (!arg0.getSource().equals(view.table)) {
-					view.depCodeTf.setEditable(true);
-					view.modify.setBackground(Color.yellow);
-					view.modify.setForeground(Color.gray);
-					view.tableSelected = false;
-					view.isModifying = false;
+				if (!arg0.getSource().equals(table)) {
+					depCodeTf.setEditable(true);
+					modify.setBackground(Color.yellow);
+					modify.setForeground(Color.gray);
+					tableSelected = false;
+					isModifying = false;
 				}
 			}
 		});
 	}
 
 	public boolean nullCheck() {
-		if (view.depCodeTf.getText().equals("")) {
+		if (depCodeTf.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "값을 입력 해주세요");
-			view.depCodeTf.requestFocus();
+			depCodeTf.requestFocus();
 			return false;
-		} else if (view.depNameTf.getText().equals("")) {
+		} else if (depNameTf.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "값을 입력 해주세요");
-			view.depNameTf.requestFocus();
+			depNameTf.requestFocus();
 			return false;
-		} else if (view.depMajorTf.getText().equals("")) {
+		} else if (depMajorTf.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "값을 입력 해주세요");
-			view.depMajorTf.requestFocus();
+			depMajorTf.requestFocus();
 			return false;
 		} else
 			return true;
 	}
 
 	private void showTable() throws Exception {
-		ArrayList<DepData> dep = view.db.selectAll();
-		view.dtm.setRowCount(0);
+		ArrayList<DepData> dep = db.selectAll();
+		dtm.setRowCount(0);
 		for (int i = 0; i < dep.size(); i++) {
-			view.dtm.addRow(dep.get(i).toArray());
+			dtm.addRow(dep.get(i).toArray());
 		}
 	}
 
 	public void clearField() {
-		view.depNameTf.setText("");
-		view.depMajorTf.setText("");
-		view.searchBox.setText("");
-		view.depCodeTf.setText("");
+		depNameTf.setText("");
+		depMajorTf.setText("");
+		searchBox.setText("");
+		depCodeTf.setText("");
 	}
 }

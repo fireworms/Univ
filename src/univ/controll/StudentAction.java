@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import univ.dto.StuData;
 import univ.ui.StudentMain;
-import univ.vo.StuData;
 
 public class StudentAction {
 	StudentMain main;

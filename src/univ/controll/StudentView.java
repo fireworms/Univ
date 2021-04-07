@@ -120,7 +120,7 @@ public class StudentView {
 		pn6.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		contentPane.add(pn6);
 
-		topLbl = new JLabel("背 荐 包 府");
+		topLbl = new JLabel("切 积 包 府");
 		pn1.add(topLbl);
 
 		stuCodeLbl = new JLabel("切 锅 ");

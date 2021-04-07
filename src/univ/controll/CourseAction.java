@@ -13,8 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import univ.dto.CourseData;
 import univ.ui.CourseMain;
-import univ.vo.CourseData;
 
 public class CourseAction {
 	CourseMain main;

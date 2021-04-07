@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import univ.vo.CourseData;
+import univ.dto.CourseData;
 import dbconnection.DBConn;
 
 public class CourseDAO {

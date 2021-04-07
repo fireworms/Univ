@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import univ.vo.DepData;
+import univ.dto.DepData;
 import dbconnection.DBConn;
 
 public class DepDAO {

@@ -8,26 +8,29 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import univ.controll.LoginFormAction;
+import univ.controll.RegistFormAction;
 
-public class LoginForm extends JFrame{
+public class RegistForm extends JDialog{
 	
-	private static final long serialVersionUID = -73211096598732424L;
+	private static final long serialVersionUID = 1201267056037992002L;
 	
 	Container contentPane;
 	JPanel topPanel, centerPanel, botPanel;
-	JPanel innerTop, innerCenter1, innerCenter2, innerBot1, innerBot2, innerBot3;
-	JLabel topLbl, idLbl, passLbl;
-	public JButton reg, login, exit;
-	public JTextField idTF, passTF;
+	JPanel innerTop, innerCenter1, innerCenter1_code, innerCenter2, innerBot1, innerBot2;
+	JLabel topLbl, idLbl, passLbl, codeLbl;
+	public JButton reg, exit;
+	public JTextField idTF, passTF, codeTF;
+	public JComboBox<String> auth;
 	
-	public LoginForm(){
-		this.setSize(new Dimension(400, 260));
+	public RegistForm(){
+		this.setSize(new Dimension(400, 290));
+		this.setModal(true);
 		Container contentPane = this.getContentPane();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		
@@ -45,56 +48,58 @@ public class LoginForm extends JFrame{
 		innerTop = new JPanel();
 		innerTop.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		innerCenter1 = new JPanel();
-		innerCenter1.setMinimumSize(new Dimension(150, 70));
-		innerCenter1.setMaximumSize(new Dimension(150, 70));
+		innerCenter1.setMinimumSize(new Dimension(150, 105));
+		innerCenter1.setMaximumSize(new Dimension(150, 105));
 		innerCenter1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		innerCenter1.setLayout(new GridLayout(0, 1, 10, 10));
+		innerCenter1_code = new JPanel();
+		innerCenter1_code.setLayout(new GridLayout(0, 2));
 		innerCenter2 = new JPanel();
-		innerCenter2.setMinimumSize(new Dimension(250, 70));
-		innerCenter2.setMaximumSize(new Dimension(250, 70));
+		innerCenter2.setMinimumSize(new Dimension(250, 105));
+		innerCenter2.setMaximumSize(new Dimension(250, 105));
 		innerCenter2.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		innerCenter2.setLayout(new GridLayout(0, 1, 10, 10));
 		innerBot1 = new JPanel();
 		innerBot1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		innerBot2 = new JPanel();
 		innerBot2.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		innerBot3 = new JPanel();
-		innerBot3.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		topPanel.add(innerTop);
 		centerPanel.add(innerCenter1);
 		centerPanel.add(innerCenter2);
 		botPanel.add(innerBot1);
 		botPanel.add(innerBot2);
-		botPanel.add(innerBot3);
 		
-		topLbl = new JLabel("학사관리 프로그램"); 
+		topLbl = new JLabel("회 원 가 입"); 
 		idLbl = new JLabel("ID");
 		passLbl = new JLabel("Password");
+		auth = new JComboBox<String>();
+		auth.addItem("학생");
+		auth.addItem("교수");
+		codeLbl = new JLabel("번호");
 		innerTop.add(topLbl);
 		innerCenter1.add(idLbl);
 		innerCenter1.add(passLbl);
+		innerCenter1.add(innerCenter1_code);
+		innerCenter1_code.add(auth);
+		innerCenter1_code.add(codeLbl);
+		
 		
 		idTF = new JTextField();
 		passTF = new JTextField();
+		codeTF = new JTextField();
 		innerCenter2.add(idTF);
 		innerCenter2.add(passTF);
+		innerCenter2.add(codeTF);
 		
 		reg = new JButton("가  입");
-		login = new JButton("로그인");
 		exit = new JButton("종  료");
 		
 		innerBot1.add(reg);
-		innerBot2.add(login);
-		innerBot3.add(exit);
+		innerBot2.add(exit);
 		
-		new LoginFormAction(this);
+		new RegistFormAction(this);
 		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 	}
-
-	public static void main(String[] args) {
-		new LoginForm();
-	}
-
 }

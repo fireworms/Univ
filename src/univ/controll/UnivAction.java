@@ -11,30 +11,32 @@ import javax.swing.JMenuItem;
 import univ.ui.CourseMain;
 import univ.ui.DepartmentMain;
 import univ.ui.ProfessorMain;
+import univ.ui.StudentMain;
 import univ.ui.UnivMainMenu;
 
 public class UnivAction {
 
-	JMenuBar menuBar;
-	ArrayList<JMenu> menu;
+	ArrayList<JMenuItem> menuItem0;
 	ArrayList<JMenuItem> menuItem1;
 	ArrayList<JMenuItem> menuItem2;
 	ArrayList<JMenuItem> menuItem3;
-	ArrayList<String> menuStr;
-	ArrayList<String> menuItemStr1;
-	ArrayList<String> menuItemStr2;
-	ArrayList<String> menuItemStr3;
 
 	public UnivAction(UnivMainMenu view) {
-		this.menuBar = view.menuBar;
-		this.menu = view.menu;
+		this.menuItem0 = view.menuItem0;
 		this.menuItem1 = view.menuItem1;
 		this.menuItem2 = view.menuItem2;
 		this.menuItem3 = view.menuItem3;
-		this.menuStr = view.menuStr;
-		this.menuItemStr1 = view.menuItemStr1;
-		this.menuItemStr2 = view.menuItemStr2;
-		this.menuItemStr3 = view.menuItemStr3;
+		
+		menuItem0.get(0).addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(arg0.getSource().equals(menuItem0.get(0))){
+					StudentMain stu = new StudentMain();
+					stu.setVisible(true);
+				}
+			}
+		});
 		
 		menuItem1.get(0).addActionListener(new ActionListener(){
 
