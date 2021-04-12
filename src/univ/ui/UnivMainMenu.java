@@ -20,25 +20,33 @@ public class UnivMainMenu extends JFrame {
 	public ArrayList<JMenuItem> menuItem1 = new ArrayList<JMenuItem>();
 	public ArrayList<JMenuItem> menuItem2 = new ArrayList<JMenuItem>();
 	public ArrayList<JMenuItem> menuItem3 = new ArrayList<JMenuItem>();
+	public ArrayList<JMenuItem> menuItem4 = new ArrayList<JMenuItem>();
 	public ArrayList<String> menuStr = new ArrayList<String>();
 	public ArrayList<String> menuItemStr0 = new ArrayList<String>();
 	public ArrayList<String> menuItemStr1 = new ArrayList<String>();
 	public ArrayList<String> menuItemStr2 = new ArrayList<String>();
 	public ArrayList<String> menuItemStr3 = new ArrayList<String>();
+	public ArrayList<String> menuItemStr4 = new ArrayList<String>();
+	public String userId;
+	public String userName;
 
 	public UnivMainMenu(LoginData getLoginData) {
 		this.setSize(800, 800);
-		String title = "학사관리 프로그램  사용자 번호 : " + getLoginData.getCode() + " 이름 : " + getLoginData.getName(); 
+		userId = getLoginData.getCode();
+		userName = getLoginData.getName();
+		String title = "학사관리 프로그램  사용자 번호 : " + userId + " 이름 : " + userName; 
 		this.setTitle(title);
 		this.setJMenuBar(menuBar);
 		menuStr.add("학생관리");
 		menuStr.add("학과관리");
 		menuStr.add("교수관리");
 		menuStr.add("교과목관리");
+		menuStr.add("수강");
 		menuItemStr0.add("등록");
 		menuItemStr1.add("등록");
 		menuItemStr2.add("등록");
 		menuItemStr3.add("등록");
+		menuItemStr4.add("등록");
 
 		for (int i = 0; i < menuStr.size(); i++) {
 			menu.add(new JMenu(menuStr.get(i)));
@@ -62,6 +70,10 @@ public class UnivMainMenu extends JFrame {
 		for (int i = 0; i < menuItemStr3.size(); i++) {
 			menuItem3.add(new JMenuItem(menuItemStr3.get(i)));
 			menu.get(3).add(menuItem3.get(i));
+		}
+		for (int i = 0; i < menuItemStr4.size(); i++) {
+			menuItem4.add(new JMenuItem(menuItemStr4.get(i)));
+			menu.get(4).add(menuItem4.get(i));
 		}
 		
 		if(!(getLoginData.getCode().charAt(0)=='p' || getLoginData.getCode().equals("admin"))){

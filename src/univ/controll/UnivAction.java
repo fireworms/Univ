@@ -4,12 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import univ.ui.CourseMain;
 import univ.ui.DepartmentMain;
+import univ.ui.EnrolmentMain;
 import univ.ui.ProfessorMain;
 import univ.ui.StudentMain;
 import univ.ui.UnivMainMenu;
@@ -20,12 +19,16 @@ public class UnivAction {
 	ArrayList<JMenuItem> menuItem1;
 	ArrayList<JMenuItem> menuItem2;
 	ArrayList<JMenuItem> menuItem3;
+	ArrayList<JMenuItem> menuItem4;
+	String userId;
 
 	public UnivAction(UnivMainMenu view) {
 		this.menuItem0 = view.menuItem0;
 		this.menuItem1 = view.menuItem1;
 		this.menuItem2 = view.menuItem2;
 		this.menuItem3 = view.menuItem3;
+		this.menuItem4 = view.menuItem4;
+		this.userId = view.userId;
 		
 		menuItem0.get(0).addActionListener(new ActionListener(){
 
@@ -68,6 +71,18 @@ public class UnivAction {
 				if(arg0.getSource().equals(menuItem3.get(0))){
 					CourseMain course = new CourseMain();
 					course.setVisible(true);
+					
+				}
+			}
+		});
+		
+		menuItem4.get(0).addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(arg0.getSource().equals(menuItem4.get(0))){
+					EnrolmentMain enrolment = new EnrolmentMain(userId);
+					enrolment.setVisible(true);
 					
 				}
 			}

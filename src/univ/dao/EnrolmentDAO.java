@@ -2,19 +2,21 @@ package univ.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import univ.dto.CourseData;
+import univ.dto.EnrolmentData;
 import dbconnection.DBConn;
 
-public class CourseDAO {
+public class EnrolmentDAO {
 
 	private DBConn dbconn = new DBConn();
 	private PreparedStatement pstmt;
 	private ResultSet rs = null;
 	private String tblName;
 
-	public CourseDAO(String tblName) {
+	public EnrolmentDAO(String tblName) {
 		this.tblName = tblName;
 	}
 
@@ -23,6 +25,16 @@ public class CourseDAO {
 				+ " A.code, A.subject, A.openyear, A.department, A.opengrade, A.semester, A.hours, B.name, A.score"
 				+ " from " + tblName + " A inner join professor B"
 				+ " on A.pcode = B.code";
+		return doSelectAll(sql);
+	}
+	
+	public ArrayList<CourseData> enrolSelectAll() throws Exception {
+		String sql = "select"
+				+ " A.code, A.subject, A.openyear, A.department, A.opengrade, A.semester, A.hours, B.name, A.score"
+				+ " from " + tblName + " A inner join professor B"
+				+ " on A.pcode = B.code"
+				+ " inner join enrolment C"
+				+ " on A.code = C.ccode";
 		return doSelectAll(sql);
 	}
 
@@ -36,56 +48,35 @@ public class CourseDAO {
 				+ " = ?";
 		return doSelect(sql, text);
 	}
-
-	public void insert(CourseData addCourse) throws Exception {
-		String sql = "insert into " + tblName
-				+ " select ?, ?, ?, ?, ?, ?, ?, (select code from professor where name = ?), ? from dual";
-		doInsert(sql, addCourse);
+	
+	public int confirm(EnrolmentData enrolData) throws SQLException{
+		delete(enrolData);
+		int isSuccess = insert(enrolData);
+		return isSuccess;
 	}
-
-	public void modify(CourseData modifyCourse) throws Exception {
-		String sql = "update "
-				+ tblName + " A inner join professor B"
-				+ " on A.pcode = B.code"
-				+ " set A.subject = ?, A.openyear = ?, A.department = ?, A.opengrade = ?, A.semester = ?, A.hours = ?, A.pcode = (select code from professor where name = ?), A.score = ?"
-				+ " where A.code = ?";
-		doModify(sql, modifyCourse);
-	}
-
-	public void remove(String value) throws Exception {
-		String sql = "delete from " + tblName + " where code = ?";
-		doRemove(sql, value);
-	}
-
-	private int doModify(String sql, CourseData modifyCourse) throws Exception {
-		int isSuccess = 0;
+	
+	private void delete(EnrolmentData enrolData) throws SQLException{
+		String sql = "delete from enrolment"
+				+ " where scode = ?";
 		pstmt = dbconn.conn.prepareStatement(sql);
-		for(int i = 1; i < modifyCourse.length(); i++){
-			pstmt.setString(i, modifyCourse.toArray()[i]);
+		pstmt.setString(1, enrolData.getScode());
+		pstmt.executeUpdate();
+	}
+	
+	private int insert(EnrolmentData enrolData) throws SQLException{
+		String name = enrolData.getScode();
+		ArrayList<String> ccodes = enrolData.getCcodes();
+		int isSuccess = 0;
+		for(int i = 0; i < ccodes.size(); i++){
+			String sql = "insert into enrolment select ?, ? ";
+			pstmt = dbconn.conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, ccodes.get(i));
+			isSuccess += pstmt.executeUpdate();
 		}
-		pstmt.setString(modifyCourse.length(), modifyCourse.toArray()[0]);
-		isSuccess = pstmt.executeUpdate();
 		return isSuccess;
 	}
-
-	private int doRemove(String sql, String value) throws Exception {
-		int isSuccess = 0;
-		pstmt = dbconn.conn.prepareStatement(sql);
-		pstmt.setString(1, value);
-		isSuccess = pstmt.executeUpdate();
-		return isSuccess;
-	}
-
-	private int doInsert(String sql, CourseData addCourse) throws Exception {
-		int isSuccess = 0;
-		pstmt = dbconn.conn.prepareStatement(sql);
-		for(int i = 0; i < addCourse.length(); i++){
-			pstmt.setString(i+1, addCourse.toArray()[i]);
-		}
-		isSuccess = pstmt.executeUpdate();
-		return isSuccess;
-	}
-
+	
 	private ArrayList<CourseData> doSelectAll(String sql) throws Exception {
 		ArrayList<CourseData> Course = new ArrayList<CourseData>();
 		pstmt = dbconn.conn.prepareStatement(sql);

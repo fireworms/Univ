@@ -75,6 +75,7 @@ public class ProfessorAction {
 				try {
 					showTable();
 				} catch (Exception e) {
+					e.printStackTrace();
 					System.out.println("¿À·ù°°Àº°É ³¢¾ñ³ª?");
 				}
 			}

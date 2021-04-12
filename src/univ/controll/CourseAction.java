@@ -37,9 +37,9 @@ public class CourseAction {
 			public void actionPerformed(ActionEvent arg0) {
 				String[] conditionStr = { "교과코드", "교과명", "개설년도", "개설학과",
 						"개설학년", "개설학기", "수업시수", "담당교수", "개설학점" };
-				String[] targetStr = { "code", "subject", "openyear",
-						"department", "opengrade", "semester", "hours",
-						"professor", "score" };
+				String[] targetStr = { "A.code", "A.subject", "A.openyear",
+						"A.department", "A.opengrade", "A.semester", "A.hours",
+						"B.name", "A.score" };
 				String condition = view.searchCondition.getSelectedItem()
 						.toString();
 				String searchText = null;
@@ -57,6 +57,7 @@ public class CourseAction {
 						view.dtm.addRow(course.get(i).toArray());
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 					System.out.println("오류같은걸 끼얹나?");
 				}
 			}
@@ -70,6 +71,7 @@ public class CourseAction {
 				try {
 					showTable();
 				} catch (Exception e) {
+					e.printStackTrace();
 					System.out.println("오류같은걸 끼얹나?");
 				}
 			}
