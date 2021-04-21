@@ -28,6 +28,7 @@ public class LoginForm extends JFrame{
 	public JTextField idTF, passTF;
 	
 	public LoginForm(){
+		this.setTitle("학사관리프로그램 로그인");
 		this.setSize(new Dimension(400, 260));
 		Container contentPane = this.getContentPane();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

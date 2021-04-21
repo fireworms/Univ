@@ -85,6 +85,8 @@ public class UnivMainMenu extends JFrame {
 		}
 		
 		if(!(getLoginData.getCode().charAt(0)=='p' || getLoginData.getCode().equals("admin"))){
+			menu.get(0).setVisible(false);
+			menu.get(1).setVisible(false);
 			menu.get(2).setVisible(false);
 			menu.get(3).setVisible(false);
 		}else {

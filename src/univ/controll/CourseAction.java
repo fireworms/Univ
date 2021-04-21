@@ -186,7 +186,7 @@ public class CourseAction {
 				view.index = view.table.getSelectedRow();
 				
 				for (int i = 0; i < view.courseComp.length; i++) {
-					if (i == 0 || i == 1 || i == 6 || i == 8) {
+					if (check[i] instanceof JTextField) {
 						JTextField temp = new JTextField();
 						temp = (JTextField) check[i];
 						temp.setText(view.table.getValueAt(view.index, i).toString());
@@ -217,7 +217,7 @@ public class CourseAction {
 
 	public boolean nullCheck() {
 		for (int i = 0; i < check.length; i++) {
-			if (i == 0 || i == 1 || i == 6 || i == 8) {
+			if (check[i] instanceof JTextField) {
 				JTextField temp = new JTextField();
 				temp = (JTextField) check[i];
 				if (temp.getText().equals("")) {
@@ -233,7 +233,7 @@ public class CourseAction {
 	private String[] getCourseData(){
 		String[] courseData = new String[9];
 		for (int i = 0; i < check.length; i++) {
-			if (i == 0 || i == 1 || i == 6 || i == 8) {
+			if (check[i] instanceof JTextField) {
 				JTextField temp = new JTextField();
 				temp = (JTextField) check[i];
 				courseData[i] = temp.getText();
@@ -256,7 +256,7 @@ public class CourseAction {
 
 	public void clearField() {
 		for (int i = 0; i < check.length; i++) {
-			if (i == 0 || i == 1 || i == 6 || i == 8) {
+			if (check[i] instanceof JTextField) {
 				JTextField temp = new JTextField();
 				temp = (JTextField) check[i];
 				temp.setText("");

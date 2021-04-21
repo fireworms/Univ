@@ -30,6 +30,7 @@ public class RegistForm extends JDialog{
 	public JComboBox<String> auth;
 	
 	public RegistForm(){
+		this.setTitle("∞°¿‘");
 		this.setSize(new Dimension(400, 290));
 		this.setModal(true);
 		Container contentPane = this.getContentPane();
