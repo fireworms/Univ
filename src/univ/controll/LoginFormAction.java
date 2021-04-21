@@ -52,7 +52,9 @@ public class LoginFormAction {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				loginAction();
+				if(nullCheck()){
+					loginAction();
+				}
 			}
 
 		});
@@ -92,7 +94,26 @@ public class LoginFormAction {
 				openMain();
 			}
 		} catch (Exception ee) {
+			alert();
 			ee.printStackTrace();
 		}
+	}
+	
+	private void alert(){
+		JOptionPane.showMessageDialog(null, "아이디와 비밀번호를 제대로 입력하세요");
+	}
+	
+	private boolean nullCheck(){
+		if(this.idTF.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "아이디를 입력하세요");
+			this.idTF.requestFocus();
+			return false;
+		}
+		if(this.passTF.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "패스워드를 입력하세요");
+			this.passTF.requestFocus();
+			return false;
+		}
+		return true;
 	}
 }

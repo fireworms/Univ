@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import univ.controll.RegistFormAction;
+import univ.style.Colors;
 
 public class RegistForm extends JDialog{
 	
@@ -37,7 +38,6 @@ public class RegistForm extends JDialog{
 		topPanel = new JPanel();
 		centerPanel = new JPanel();
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.X_AXIS));
-		centerPanel.setBackground(Color.black);
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		botPanel = new JPanel();
 		botPanel.setLayout(new BoxLayout(botPanel, BoxLayout.X_AXIS));
@@ -92,8 +92,11 @@ public class RegistForm extends JDialog{
 		innerCenter2.add(codeTF);
 		
 		reg = new JButton("가  입");
+		reg.setForeground(Colors.getBtnTxt());
+		reg.setBackground(Colors.getBtn());
 		exit = new JButton("종  료");
-		
+		exit.setForeground(Colors.getBtnTxt());
+		exit.setBackground(Colors.getBtn());   
 		innerBot1.add(reg);
 		innerBot2.add(exit);
 		

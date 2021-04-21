@@ -28,14 +28,14 @@ public class EnrolmentDAO {
 		return doSelectAll(sql);
 	}
 	
-	public ArrayList<CourseData> enrolSelectAll() throws Exception {
+	public ArrayList<CourseData> enrolSelectAll(String userId) throws Exception {
 		String sql = "select"
 				+ " A.code, A.subject, A.openyear, A.department, A.opengrade, A.semester, A.hours, B.name, A.score"
 				+ " from " + tblName + " A inner join professor B"
 				+ " on A.pcode = B.code"
 				+ " inner join enrolment C"
-				+ " on A.code = C.ccode";
-		return doSelectAll(sql);
+				+ " on A.code = C.ccode where scode = ?";
+		return doEnrolSelectAll(sql, userId);
 	}
 
 	public ArrayList<CourseData> select(String condition, String text)
@@ -80,6 +80,15 @@ public class EnrolmentDAO {
 	private ArrayList<CourseData> doSelectAll(String sql) throws Exception {
 		ArrayList<CourseData> Course = new ArrayList<CourseData>();
 		pstmt = dbconn.conn.prepareStatement(sql);
+		rs = pstmt.executeQuery();
+		selectRow(Course, rs);
+		return Course;
+	}
+	
+	private ArrayList<CourseData> doEnrolSelectAll(String sql, String userId) throws Exception {
+		ArrayList<CourseData> Course = new ArrayList<CourseData>();
+		pstmt = dbconn.conn.prepareStatement(sql);
+		pstmt.setString(1, userId);
 		rs = pstmt.executeQuery();
 		selectRow(Course, rs);
 		return Course;

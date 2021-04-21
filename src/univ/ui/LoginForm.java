@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import univ.controll.LoginFormAction;
+import univ.style.Colors;
 
 public class LoginForm extends JFrame{
 	
@@ -34,7 +35,6 @@ public class LoginForm extends JFrame{
 		topPanel = new JPanel();
 		centerPanel = new JPanel();
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.X_AXIS));
-		centerPanel.setBackground(Color.black);
 		centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		botPanel = new JPanel();
 		botPanel.setLayout(new BoxLayout(botPanel, BoxLayout.X_AXIS));
@@ -80,8 +80,14 @@ public class LoginForm extends JFrame{
 		innerCenter2.add(passTF);
 		
 		reg = new JButton("가  입");
+		reg.setForeground(Colors.getBtnTxt());
+		reg.setBackground(Colors.getBtn());   
 		login = new JButton("로그인");
+		login.setForeground(Colors.getBtnTxt());
+		login.setBackground(Colors.getBtn());   
 		exit = new JButton("종  료");
+		exit.setForeground(Colors.getBtnTxt());
+		exit.setBackground(Colors.getBtn());   
 		
 		innerBot1.add(reg);
 		innerBot2.add(login);

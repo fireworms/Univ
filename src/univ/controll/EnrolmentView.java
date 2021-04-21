@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import univ.dao.EnrolmentDAO;
+import univ.style.Colors;
 import univ.ui.EnrolmentMain;
 
 public class EnrolmentView {
@@ -56,7 +57,7 @@ public class EnrolmentView {
 		pn1.setMinimumSize(new Dimension(width, 45));
 		pn1.setMaximumSize(new Dimension(width, 45));
 		pn1.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-		pn1.setBackground(Color.gray);
+		pn1.setBackground(Colors.getSubject());
 		contentPane.add(pn1);
 
 		pn2 = new JPanel();
@@ -64,7 +65,6 @@ public class EnrolmentView {
 		pn2.setMaximumSize(new Dimension(width, 70));
 		pn2.setLayout(new BoxLayout(pn2, BoxLayout.X_AXIS));
 		pn2.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
-		pn2.setBackground(Color.blue);
 		contentPane.add(pn2);
 
 		String[] colNames = conditions;
@@ -112,30 +112,34 @@ public class EnrolmentView {
 		pn2.add(emptyLbl2);
 
 		select = new JButton("조회");
+		select.setForeground(Colors.getBtnTxt());
+		select.setBackground(Colors.getBtn());   
 		pn2.add(select);
 		pn2.add(emptyLbl3);
 
 		selectAll = new JButton("전체조회");
+		selectAll.setForeground(Colors.getBtnTxt());
+		selectAll.setBackground(Colors.getBtn());   
 		pn2.add(selectAll);
 
 		remove = new JButton("▲");
-		remove.setForeground(Color.white);
-		remove.setBackground(Color.black);
+		remove.setForeground(Colors.getBtnTxt());
+		remove.setBackground(Colors.getBtn());
 		pn4.add(remove);
 		
 		insert = new JButton("▼");
-		insert.setForeground(Color.white);
-		insert.setBackground(Color.black);
+		insert.setForeground(Colors.getBtnTxt());
+		insert.setBackground(Colors.getBtn());   
 		pn4.add(insert);
 		
 		confirm = new JButton("저장");
-		confirm.setForeground(Color.white);
-		confirm.setBackground(Color.black);
+		confirm.setForeground(Colors.getBtnTxt());
+		confirm.setBackground(Colors.getBtn());   
 		pn6.add(confirm);
 		
 		exit = new JButton("종료");
-		exit.setForeground(Color.white);
-		exit.setBackground(Color.black);
+		exit.setForeground(Colors.getBtnTxt());
+		exit.setBackground(Colors.getBtn());   
 		pn6.add(exit);
 
 		EnrolmentAction controll = new EnrolmentAction(view, this);

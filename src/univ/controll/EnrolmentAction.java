@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import univ.dao.EnrolmentDAO;
 import univ.dto.CourseData;
 import univ.dto.EnrolmentData;
 import univ.ui.EnrolmentMain;
@@ -20,12 +19,12 @@ public class EnrolmentAction {
 	public EnrolmentAction(EnrolmentMain main, EnrolmentView view) {
 		this.main = main;
 		this.view = view;
-		setEnrolmentTable();
+		setEnrolmentTable(view.userId);
 	}
 
-	private void setEnrolmentTable() {
+	private void setEnrolmentTable(String userId) {
 		try {
-			ArrayList<CourseData> course = view.db.enrolSelectAll();
+			ArrayList<CourseData> course = view.db.enrolSelectAll(userId);
 			for (int i = 0; i < course.size(); i++) {
 				view.enrolDtm.addRow(course.get(i).toEnrolArray());
 			}
@@ -34,7 +33,7 @@ public class EnrolmentAction {
 		}
 
 	}
-	
+
 	public void setListeners() {
 		view.select.addActionListener(new ActionListener() {
 
@@ -104,28 +103,46 @@ public class EnrolmentAction {
 				view.enrolIndex = view.enrolTable.getSelectedRow();
 			}
 		});
-		
-		view.insert.addActionListener(new ActionListener(){
 
-			@Override//중복처리
+		view.insert.addActionListener(new ActionListener() {
+
+			@Override
+			// 중복처리
 			public void actionPerformed(ActionEvent e) {
-				Object[] row = new Object[view.dtm.getColumnCount()];
-				for(int i = 0; i < row.length; i++){
-					row[i] = view.dtm.getValueAt(view.index, i);
+				if(view.tableSelected){
+					Object[] row = new Object[view.dtm.getColumnCount()];
+					for (int i = 0; i < view.enrolDtm.getRowCount(); i++) {
+						if (view.enrolDtm.getValueAt(i, 0).equals(
+								view.dtm.getValueAt(view.index, 0))) {
+							JOptionPane.showMessageDialog(null, "중복");
+							return;
+						}
+					}
+					for (int i = 0; i < row.length; i++) {
+						row[i] = view.dtm.getValueAt(view.index, i);
+					}
+					view.enrolDtm.addRow(row);
+					view.tableSelected = false;
+				}else{
+					JOptionPane.showMessageDialog(null, "골라");
 				}
-				view.enrolDtm.addRow(row);
 			}
 		});
-		
-		view.remove.addActionListener(new ActionListener(){
+
+		view.remove.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				view.enrolDtm.removeRow(view.enrolIndex);				
+				if(view.enrolTableSelected){
+					view.enrolDtm.removeRow(view.enrolIndex);
+					view.enrolTableSelected = false;
+				}else{
+					JOptionPane.showMessageDialog(null, "골라");
+				}
 			}
 		});
-		
-		view.confirm.addActionListener(new ActionListener(){
+
+		view.confirm.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -133,23 +150,23 @@ public class EnrolmentAction {
 				enrolmentData.setScode(view.userId);
 				ArrayList<String> ccodes = new ArrayList<String>();
 				int isSuccess = 0;
-				for(int i = 0; i < view.enrolDtm.getRowCount(); i++){
-					ccodes.add((String)view.enrolDtm.getValueAt(i, 0));
+				for (int i = 0; i < view.enrolDtm.getRowCount(); i++) {
+					ccodes.add((String) view.enrolDtm.getValueAt(i, 0));
 				}
 				enrolmentData.setCcodes(ccodes);
-				try{
+				try {
 					isSuccess = view.db.confirm(enrolmentData);
-				}catch(Exception ee){
+				} catch (Exception ee) {
 					ee.printStackTrace();
 				}
-				if(isSuccess == ccodes.size()){
+				if (isSuccess == ccodes.size()) {
 					JOptionPane.showMessageDialog(null, "성공");
 				}
-				
+
 			}
 		});
 	}
-	
+
 	private void showTable() throws Exception {
 		ArrayList<CourseData> course = view.db.selectAll();
 		view.dtm.setRowCount(0);

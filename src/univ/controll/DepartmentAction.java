@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 import univ.dao.DepDAO;
 import univ.dto.DepData;
+import univ.style.Colors;
 import univ.ui.DepartmentMain;
 
 public class DepartmentAction {
@@ -153,8 +154,8 @@ public class DepartmentAction {
 								showTable();
 								clearField();
 								depCodeTf.setEditable(true);
-								modify.setBackground(Color.yellow);
-								modify.setForeground(Color.gray);
+								modify.setBackground(Colors.getBtn());   
+								modify.setForeground(Colors.getBtnTxt());
 								tableSelected = false;
 								isModifying = false;
 							} catch (Exception ee) {
@@ -201,8 +202,8 @@ public class DepartmentAction {
 			public void mousePressed(MouseEvent arg0) {
 				if (!arg0.getSource().equals(table)) {
 					depCodeTf.setEditable(true);
-					modify.setBackground(Color.yellow);
-					modify.setForeground(Color.gray);
+					modify.setBackground(Colors.getBtn());   
+					modify.setForeground(Colors.getBtnTxt());
 					tableSelected = false;
 					isModifying = false;
 				}

@@ -21,12 +21,14 @@ public class UnivMainMenu extends JFrame {
 	public ArrayList<JMenuItem> menuItem2 = new ArrayList<JMenuItem>();
 	public ArrayList<JMenuItem> menuItem3 = new ArrayList<JMenuItem>();
 	public ArrayList<JMenuItem> menuItem4 = new ArrayList<JMenuItem>();
+	public ArrayList<JMenuItem> menuItem5 = new ArrayList<JMenuItem>();
 	public ArrayList<String> menuStr = new ArrayList<String>();
 	public ArrayList<String> menuItemStr0 = new ArrayList<String>();
 	public ArrayList<String> menuItemStr1 = new ArrayList<String>();
 	public ArrayList<String> menuItemStr2 = new ArrayList<String>();
 	public ArrayList<String> menuItemStr3 = new ArrayList<String>();
 	public ArrayList<String> menuItemStr4 = new ArrayList<String>();
+	public ArrayList<String> menuItemStr5 = new ArrayList<String>();
 	public String userId;
 	public String userName;
 
@@ -41,12 +43,14 @@ public class UnivMainMenu extends JFrame {
 		menuStr.add("학과관리");
 		menuStr.add("교수관리");
 		menuStr.add("교과목관리");
-		menuStr.add("수강");
-		menuItemStr0.add("등록");
-		menuItemStr1.add("등록");
-		menuItemStr2.add("등록");
-		menuItemStr3.add("등록");
-		menuItemStr4.add("등록");
+		menuStr.add("수강신청");
+		menuStr.add("사용자");
+		menuItemStr0.add("메뉴");
+		menuItemStr1.add("메뉴");
+		menuItemStr2.add("메뉴");
+		menuItemStr3.add("메뉴");
+		menuItemStr4.add("메뉴");
+		menuItemStr5.add("로그아웃");
 
 		for (int i = 0; i < menuStr.size(); i++) {
 			menu.add(new JMenu(menuStr.get(i)));
@@ -75,10 +79,16 @@ public class UnivMainMenu extends JFrame {
 			menuItem4.add(new JMenuItem(menuItemStr4.get(i)));
 			menu.get(4).add(menuItem4.get(i));
 		}
+		for (int i = 0; i < menuItemStr5.size(); i++) {
+			menuItem5.add(new JMenuItem(menuItemStr5.get(i)));
+			menu.get(5).add(menuItem5.get(i));
+		}
 		
 		if(!(getLoginData.getCode().charAt(0)=='p' || getLoginData.getCode().equals("admin"))){
 			menu.get(2).setVisible(false);
 			menu.get(3).setVisible(false);
+		}else {
+			menu.get(4).setVisible(false);
 		}
 		
 		new UnivAction(this);

@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import univ.dto.ProData;
+import univ.style.Colors;
 import univ.ui.ProfessorMain;
 
 public class ProfessorAction {
@@ -168,8 +169,8 @@ public class ProfessorAction {
 								showTable();
 								clearField();
 								view.proCodeTf.setEditable(true);
-								view.modify.setBackground(Color.yellow);
-								view.modify.setForeground(Color.gray);
+								view.modify.setBackground(Colors.getBtn());   
+								view.modify.setForeground(Colors.getBtnTxt());
 								view.tableSelected = false;
 								view.isModifying = false;
 							} catch (Exception ee) {
@@ -235,8 +236,8 @@ public class ProfessorAction {
 			public void mousePressed(MouseEvent arg0) {
 				if (!arg0.getSource().equals(view.table)) {
 					view.proCodeTf.setEditable(true);
-					view.modify.setBackground(Color.yellow);
-					view.modify.setForeground(Color.gray);
+					view.modify.setBackground(Colors.getBtn());   
+					view.modify.setForeground(Colors.getBtnTxt());
 					view.tableSelected = false;
 					view.isModifying = false;
 				}
